@@ -145,6 +145,13 @@ func (c *Conn) readClientHello(ctx context.Context) (*clientHelloMsg, *echServer
 		return nil, nil, unexpectedMessageError(clientHello, msg)
 	}
 
+	// ===============[hTLS SECTION BEGIN]===============
+	err = c.onClientHelloMessage(clientHello)
+	if err != nil {
+		return nil, nil, err
+	}
+	// ================[hTLS SECTION END]================
+
 	// ECH processing has to be done before we do any other negotiation based on
 	// the contents of the client hello, since we may swap it out completely.
 	var ech *echServerContext
@@ -254,6 +261,12 @@ func (hs *serverHandshakeState) processClientHello() error {
 		c.sendAlert(alertInternalError)
 		return err
 	}
+
+	// ===============[hTLS SECTION BEGIN]===============
+	if len(c.config.Random) > 0 {
+		copy(serverRandom, c.config.Random)
+	}
+	// ================[hTLS SECTION END]================
 
 	if len(hs.clientHello.secureRenegotiation) != 0 {
 		c.sendAlert(alertHandshakeFailure)
