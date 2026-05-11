@@ -4,7 +4,7 @@
 
 //go:build !boringcrypto
 
-package tls
+package htls
 
 import (
 	"crypto/ecdsa"
