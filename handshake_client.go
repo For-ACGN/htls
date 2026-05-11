@@ -107,6 +107,12 @@ func (c *Conn) makeClientHello() (*clientHelloMsg, *keySharePrivateKeys, *echCli
 		return nil, nil, nil, errors.New("tls: short read from Rand: " + err.Error())
 	}
 
+	// ===============[hTLS SECTION BEGIN]===============
+	if len(config.Random) > 0 {
+		copy(hello.random, config.Random)
+	}
+	// ================[hTLS SECTION END]================
+
 	// A random session ID is used to detect when the server accepted a ticket
 	// and is resuming a session (see RFC 5077). In TLS 1.3, it's always set as
 	// a compatibility measure (see RFC 8446, Section 4.1.2).
@@ -268,6 +274,12 @@ func (c *Conn) clientHandshake(ctx context.Context) (err error) {
 			return errors.New("tls: short read from Rand: " + err.Error())
 		}
 
+		// ===============[hTLS SECTION BEGIN]===============
+		if len(c.config.Random) > 0 {
+			copy(hello.random, c.config.Random)
+		}
+		// ================[hTLS SECTION END]================
+
 		// NOTE: we don't do PSK GREASE, in line with boringssl, it's meant to
 		// work around _possibly_ broken middleboxes, but there is little-to-no
 		// evidence that this is actually a problem.
@@ -308,6 +320,13 @@ func (c *Conn) clientHandshake(ctx context.Context) (err error) {
 		c.sendAlert(alertUnexpectedMessage)
 		return unexpectedMessageError(serverHello, msg)
 	}
+
+	// ===============[hTLS SECTION BEGIN]===============
+	err = c.onServerHelloMessage(serverHello)
+	if err != nil {
+		return err
+	}
+	// ================[hTLS SECTION END]================
 
 	if err := c.pickTLSVersion(serverHello); err != nil {
 		return err
