@@ -11,21 +11,22 @@ import (
 	"crypto/ecdsa"
 	"crypto/ed25519"
 	"crypto/hpke"
-	"crypto/internal/fips140/tls13"
 	"crypto/rsa"
 	"crypto/subtle"
-	"crypto/tls/internal/fips140tls"
 	"crypto/x509"
 	"errors"
 	"fmt"
 	"hash"
-	"internal/godebug"
 	"io"
 	"net"
 	"slices"
 	"strconv"
 	"strings"
 	"time"
+
+	"github.com/For-ACGN/htls/internal/fips140tls"
+	"github.com/For-ACGN/htls/internal/godebug"
+	"github.com/For-ACGN/htls/internal/tls13"
 )
 
 type clientHandshakeState struct {

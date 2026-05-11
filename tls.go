@@ -33,10 +33,11 @@ import (
 	"encoding/pem"
 	"errors"
 	"fmt"
-	"internal/godebug"
 	"net"
 	"os"
 	"strings"
+
+	"github.com/For-ACGN/htls/internal/godebug"
 )
 
 // Server returns a new TLS server side connection

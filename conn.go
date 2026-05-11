@@ -15,12 +15,13 @@ import (
 	"errors"
 	"fmt"
 	"hash"
-	"internal/godebug"
 	"io"
 	"net"
 	"sync"
 	"sync/atomic"
 	"time"
+
+	"github.com/For-ACGN/htls/internal/godebug"
 )
 
 // A Conn represents a secured connection.

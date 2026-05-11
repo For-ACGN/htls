@@ -5,9 +5,10 @@
 package tls
 
 import (
-	"internal/godebug"
 	"slices"
 	_ "unsafe" // for linkname
+
+	"github.com/For-ACGN/htls/internal/godebug"
 )
 
 // Defaults are collected in this file to allow distributions to more easily patch

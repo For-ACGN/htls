@@ -15,11 +15,9 @@ import (
 	"crypto/rand"
 	"crypto/rsa"
 	"crypto/sha512"
-	"crypto/tls/internal/fips140tls"
 	"crypto/x509"
 	"errors"
 	"fmt"
-	"internal/godebug"
 	"io"
 	"net"
 	"runtime"
@@ -28,6 +26,9 @@ import (
 	"sync"
 	"time"
 	_ "unsafe" // for linkname
+
+	"github.com/For-ACGN/htls/internal/fips140tls"
+	"github.com/For-ACGN/htls/internal/godebug"
 )
 
 const (
