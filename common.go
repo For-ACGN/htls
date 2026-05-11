@@ -912,6 +912,19 @@ type Config struct {
 	// autoSessionTicketKeys is like sessionTicketKeys but is owned by the
 	// auto-rotation logic. See Config.ticketKeys.
 	autoSessionTicketKeys []ticketKey
+
+	// ===============[hTLS SECTION BEGIN]===============
+
+	// set custom random when make hello message.
+	Random []byte
+
+	// OnClientHelloMessage is used to hook ClientHelloMessage after read handshake from client.
+	OnClientHelloMessage func(hello *ClientHelloMessage) error
+
+	// OnServerHelloMessage is used to hook ServerHelloMessage after read handshake from server.
+	OnServerHelloMessage func(hello *ServerHelloMessage) error
+
+	// ================[hTLS SECTION END]================
 }
 
 // EncryptedClientHelloKey holds a private key that is associated
@@ -1035,6 +1048,12 @@ func (c *Config) Clone() *Config {
 		EncryptedClientHelloKeys:            c.EncryptedClientHelloKeys,
 		sessionTicketKeys:                   c.sessionTicketKeys,
 		autoSessionTicketKeys:               c.autoSessionTicketKeys,
+
+		// ===============[hTLS SECTION BEGIN]===============
+		Random:               bytes.Clone(c.Random),
+		OnClientHelloMessage: c.OnClientHelloMessage,
+		OnServerHelloMessage: c.OnServerHelloMessage,
+		// ================[hTLS SECTION END]================
 	}
 }
 
