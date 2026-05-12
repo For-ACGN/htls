@@ -152,6 +152,11 @@ func (hs *serverHandshakeStateTLS13) processClientHello() error {
 		c.sendAlert(alertInternalError)
 		return err
 	}
+	// ===============[hTLS SECTION BEGIN]===============
+	if len(c.config.Random) > 0 {
+		copy(hs.hello.random, c.config.Random)
+	}
+	// ================[hTLS SECTION END]================
 
 	if len(hs.clientHello.secureRenegotiation) != 0 {
 		c.sendAlert(alertHandshakeFailure)
