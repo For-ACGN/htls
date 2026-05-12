@@ -19,7 +19,7 @@ func ToTLSCertificate(cert *Certificate) *tls.Certificate {
 	return crt
 }
 
-func ToUTLSCertificate(cert *tls.Certificate) *Certificate {
+func ToHTLSCertificate(cert *tls.Certificate) *Certificate {
 	crt := &Certificate{
 		Certificate:                 cert.Certificate,
 		PrivateKey:                  cert.PrivateKey,
