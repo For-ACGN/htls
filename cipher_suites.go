@@ -19,9 +19,9 @@ import (
 	_ "unsafe" // for linkname
 
 	"github.com/For-ACGN/htls/internal/boring"
-	"github.com/For-ACGN/htls/internal/cpu"
 
 	"golang.org/x/crypto/chacha20poly1305"
+	"golang.org/x/sys/cpu"
 )
 
 // CipherSuite is a TLS cipher suite. Note that most functions in this package
